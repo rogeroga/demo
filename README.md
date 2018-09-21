@@ -2,6 +2,11 @@
 Interview coding test for Rogelio Robles
 
 
+## Build
+To build the project execute the following command:
+
+    mvn compile
+
 ## Execution
 To execute from the command line use maven and do:
 
@@ -17,7 +22,7 @@ To change the configuration you can edit the .properties files located in the di
 
     src/main/resources
     
-These are the defined configuration values:
+These are the defined configuration values that you can change:
 
     ## Queue max limit of parallel executions
     #
@@ -31,6 +36,4 @@ These are the defined configuration values:
 The queue.limit is the max limit of number of parallel executions allowed according ot the license agreement.
 
 The consumer.timeout is the max time in seconds allowed for a single call to the Optimization Solver
-
-  
 
