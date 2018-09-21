@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DemoApplication implements CommandLineRunner {
 
 	@Autowired
-	private OptimizationSolver solver;
+	private OptimizationSolver optimizationSolver;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -19,13 +19,15 @@ public class DemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		solver.solve("{\"requests\": 100}");
+		// The solver simulates a real world scenario by
+		// generating requests placing them in the blocking queue and
+		// have consumers taking out values of the queue
+		// and then calling the optimization solver
+		//
+		String data = "{\"requests\": [{\"id\": 10, \"data\": \"ABCD\"}, {\"id\": 30, \"data\": \"XYZ\"}]}";
 
-		// Allow the simulation to run for 12 seconds
-		Thread.sleep(10 * 1000);
+		optimizationSolver.solve(data);
 
-		// End of simulation - exit the system and shut down the program gracefully
-		System.exit(0);
 	}
 
 }

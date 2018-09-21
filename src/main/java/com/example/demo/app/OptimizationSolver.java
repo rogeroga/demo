@@ -13,17 +13,19 @@ public class OptimizationSolver {
     @Value("${consumer.timeout}")
     private int timeout;
 
+
     public void solve(String data) throws Exception {
 
-        int numProducers = 2;
-        int numConsumers = 1;
+        int producers = 4;
+        int consumers = 2;
 
         // Initialize the queue
         queue.init();
 
         // Simulate multiple parallel incoming requests
+        // that is why few producer threads are created
         //
-        for (int i = 0; i < numProducers; i++) {
+        for (int i = 0; i < producers; i++) {
 
             // A RequestProducer generates requests to the optimization solver
             // but first those requests would be placed in the BlockingQueue
@@ -32,16 +34,24 @@ public class OptimizationSolver {
 
         }
 
-        // Simulate multiple parallel requests would come out of the BlockingQueue
+        // After the requests payloads were pushed into the queue
+        // Now let's simulate that multiple consumers would be taking values out of the BlockingQueue
+        // And then is where the Optimizing Parallel solver would be called
+        // In this way we can have a maximum number of parallel requests going to the optimizing solver
+        // And we honor the license agreement
         //
-        for (int i = 0; i < numConsumers; i++) {
+        for (int i = 0; i < consumers; i++) {
 
             new Thread( new RequestConsumer(this.queue, this.timeout) ).start();
 
         }
 
-        // Allow the threads to run for 10 seconds
-        Thread.sleep(10 * 1000);
+        // Once that the producer and consumer threads were created they would be executing independently
+        // Of the main thread and we only need to give them certain amount of time to simulate a
+        // Real world scenario
+
+        // Allow the threads to run for 12 seconds
+        Thread.sleep(12 * 1000);
 
         // Terminate the application
         System.exit(0);

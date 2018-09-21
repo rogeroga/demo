@@ -12,7 +12,7 @@ public class RequestConsumer implements Runnable {
 
     private int timeout;
 
-    private static int OPTIMIZING_SOLVER_AVG_CALL_TIME = 1;
+    private static int OPTIMIZING_SOLVER_EXPECTED_SOLVE_TIME = 1;
 
     public RequestConsumer(Queue queue, int timeout) {
         this.queue = queue;
@@ -43,7 +43,7 @@ public class RequestConsumer implements Runnable {
 
     /**
      * Here is where is expected to call the optimization solver
-     * and time out each request to the maximum time allowed
+     * and set a time out each request to the expected time allowed
      *
      * @param payload
      */
@@ -55,9 +55,12 @@ public class RequestConsumer implements Runnable {
 
         Future<String> future = executor.submit(
             (Callable) () -> {
-                                // Simulate a call to the optimizing solver by spending time
-                                // To create timeout increase this value
-                                Thread.sleep(OPTIMIZING_SOLVER_AVG_CALL_TIME * 1000);
+                                // A call to the Optimizing Solver is simulated here by spending time
+                                //
+                                // To create timeout scenario increase the value of this constant
+                                // to something bigger than the timeout in the configuration
+                                //
+                                Thread.sleep(OPTIMIZING_SOLVER_EXPECTED_SOLVE_TIME * 1000);
 
                                 return "Ok - for payload: " + payload;
                             });
